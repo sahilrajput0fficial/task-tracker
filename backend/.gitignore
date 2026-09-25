@@ -1,0 +1,35 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.pytest_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+
+# Virtual environments
+.venv
+venv/
+ENV/
+
+# Environment and Secrets
+.env
+.env.local
+.env.*.local
+
+# Databases & SQLite
+*.db
+*.sqlite
+*.sqlite3
+task_tracker.db
+test.db
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
