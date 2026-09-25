@@ -2,14 +2,14 @@
 
 A robust, secure backend REST API built with **FastAPI**, **SQLAlchemy ORM**, **Pydantic v2**, and **JWT Authentication**.
 
-This system implements role-based access control (**Admin** and **Normal User**), password hashing with **bcrypt**, user profile management, and a complete CRUD task management system with strict data isolation.
+This system implements role-based access control (**Admin** and **Normal User**), password hashing with **argon2-cffi**, user profile management, and a complete CRUD task management system with strict data isolation.
 
 ---
 
 ## 🚀 Features
 
 - **Authentication & Security:**
-  - Password hashing using `bcrypt` with automatic salting.
+  - Password hashing using `argon2-cffi` with automatic salting.
   - Stateless JSON Web Token (**JWT**) authentication via `PyJWT` (HMAC-SHA256).
   - Bearer token authentication required on all protected endpoints.
   - Zero hardcoded secrets: all configuration is driven by environment variables (`.env`).
@@ -71,7 +71,7 @@ task-tracker/
 │   │   └── task.py          # Task create, update, and response schemas
 │   └── services/
 │       ├── __init__.py
-│       └── auth_service.py  # Bcrypt password hashing & JWT encode/decode logic
+│       └── auth_service.py  # argon2-cffi password hashing & JWT encode/decode logic
 ├── tests/
 │   ├── __init__.py
 │   ├── conftest.py          # In-memory test DB, test client, user & admin fixtures
@@ -93,7 +93,7 @@ task-tracker/
 | **Framework** | [FastAPI](https://fastapi.tiangolo.com/) | High performance, automatic OpenAPI documentation, clean dependency injection |
 | **ORM** | [SQLAlchemy 2.0](https://www.sqlalchemy.org/) | Industry-standard Python ORM with connection pooling & transaction safety |
 | **Database** | [SQLite](https://www.sqlite.org/) | Zero-configuration file database (also compatible with PostgreSQL via `DATABASE_URL`) |
-| **Security / JWT** | [PyJWT](https://pyjwt.readthedocs.io/) & [bcrypt](https://github.com/pyca/bcrypt) | Industry-standard password hashing and cryptographically secure token signing |
+| **Security / JWT** | [PyJWT](https://pyjwt.readthedocs.io/) & [argon2-cffi](https://github.com/pyca/argon2-cffi) | Industry-standard password hashing and cryptographically secure token signing |
 | **Data Validation** | [Pydantic v2](https://docs.pydantic.dev/) | Strict input validation, deserialization, and serialization |
 | **Testing** | [pytest](https://docs.pytest.org/) & `TestClient` | Automated unit and integration testing suite |
 
@@ -129,7 +129,7 @@ python -m venv .venv
 ```bash
 pip install -r pyproject.toml
 # Or install using pip directly:
-pip install "fastapi[standard]" "sqlalchemy>=2.0.0" "pydantic-settings" "pyjwt[crypto]" "bcrypt>=4.0.0" "pytest" "pytest-asyncio" "httpx"
+pip install "fastapi[standard]" "sqlalchemy>=2.0.0" "pydantic-settings" "pyjwt[crypto]" "argon2-cffi>=4.0.0" "pytest" "pytest-asyncio" "httpx"
 ```
 
 ### 5. Configure Environment Variables
@@ -434,7 +434,7 @@ curl -X DELETE "http://127.0.0.1:8000/tasks/1" \
 
 ## 🔒 Security Summary
 
-1. **Password Hashing:** Passwords are never stored in plain text. Stored passwords use `bcrypt` key derivation with random salting.
+1. **Password Hashing:** Passwords are never stored in plain text. Stored passwords use `argon2-cffi` key derivation with random salting.
 2. **JWT Authentication:** Tokens are signed using `HS256` with configurable expiry (default 24 hours).
 3. **Role Validation:** Enforced cleanly via FastAPI dependency injection (`get_current_user` and `get_current_admin`).
 4. **Data Isolation:** User queries enforce `Task.user_id == current_user.id` so users cannot read or modify tasks created by other users.
@@ -461,5 +461,6 @@ bun run test    # or npm test
 ```
 See [frontend/README.md](file:///d:/Sahil%20Rajput/Documents/Coding%20By%20Sahil/task-tracker/frontend/README.md) for full details.
 
-#   t a s k - t r a c k e r  
+#   t a s k - t r a c k e r 
+ 
  
